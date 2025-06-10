@@ -1,0 +1,30 @@
+.education-timeline {
+  padding: 4rem 2rem;
+  background-color: var(--background-light);
+  text-align: center;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .vertical-timeline-element {
+    box-shadow: none;
+  }
+
+  .vertical-timeline-element-content {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .vertical-timeline-element-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .vertical-timeline-element--education p {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+  }
+}
