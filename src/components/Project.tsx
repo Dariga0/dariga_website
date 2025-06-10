@@ -9,7 +9,7 @@ function Project() {
         <h1>Personal Projects</h1>
         <div className="projects-grid">
             <div className="project">
-                <a href="#"target="_blank" rel="noreferrer"><img src={project_berlin} className="zoom" alt="thumbnail" width="100%"/></a>
+                <a href="#" target="_blank" rel="noreferrer"><img src={project_berlin} className="zoom" alt="thumbnail" width="100%"/></a>
                 <a  href="#" target="_blank" rel="noreferrer"><h2>Growing with AI</h2></a>
                 <p>Improved CRM and public relations with AI and Microsoft Co-Pilot. Optimized data management and explored
 opportunities for AI integration in service learning.</p>
