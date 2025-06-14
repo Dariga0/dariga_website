@@ -1,106 +1,98 @@
-import React, { useRef, useState } from 'react';
-import '../assets/styles/Contact.scss';
-import emailjs from '@emailjs/browser'; // ✅ UNCOMMENTED
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import TextField from '@mui/material/TextField';
+import '../assets/styles/Contact.scss';
 
 function Contact() {
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
-  const [nameError, setNameError] = useState<boolean>(false);
-  const [emailError, setEmailError] = useState<boolean>(false);
-  const [messageError, setMessageError] = useState<boolean>(false);
+  const [errors, setErrors] = useState({
+    name: false,
+    email: false,
+    message: false,
+  });
 
-  const form = useRef<HTMLFormElement>(null);
-
-  const sendEmail = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const hasError = name === '' || email === '' || message === '';
-    setNameError(name === '');
-    setEmailError(email === '');
-    setMessageError(message === '');
-
-    if (!hasError && form.current) {
-      const templateParams = {
-        name,
-        email,
-        message,
-      };
-
-      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams, 'YOUR_PUBLIC_KEY')
-        .then(
-          (result) => {
-            console.log('SUCCESS!', result.status, result.text);
-            alert('Message sent successfully!');
-            setName('');
-            setEmail('');
-            setMessage('');
-          },
-          (error) => {
-            console.log('FAILED...', error);
-            alert('Message failed to send.');
-          }
-        );
-    }
+  const validate = () => {
+    const newErrors = {
+      name: name.trim() === '',
+      email: email.trim() === '',
+      message: message.trim() === '',
+    };
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(Boolean);
   };
 
   return (
-    <div id="contact">
-      <div className="items-container">
-        <div className="contact_wrapper">
-          <h1>Contact Me</h1>
-          <p>Got a project waiting to be realized? Let's collaborate and make it happen!</p>
-          <Box
-            ref={form}
-            component="form"
-            noValidate
-            autoComplete="off"
-            className='contact-form'
-          >
-            <div className='form-flex'>
-              <TextField
-                required
-                label="Your Name"
-                placeholder="What's your name?"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                error={nameError}
-                helperText={nameError ? "Please enter your name" : ""}
-              />
-              <TextField
-                required
-                label="Email / Phone"
-                placeholder="How can I reach you?"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={emailError}
-                helperText={emailError ? "Please enter your email or phone number" : ""}
-              />
-            </div>
+    <section id="contact" className="contact-section">
+      <Paper className="contact-paper" elevation={4}>
+        <h1 className="contact-title">Get in Touch</h1>
+<p className="contact-subtext">
+I’m always open to discussing new opportunities, creative ideas, or potential collaborations. Drop a message below.
+</p>
+
+
+        <Box
+          component="form"
+          className="contact-form"
+          action="https://formsubmit.co/darigarakhat025@gmail.com"
+          method="POST"
+          onSubmit={(e) => {
+            if (!validate()) e.preventDefault();
+          }}
+        >
+          <div className="form-row">
             <TextField
+              name="name"
+              label="Your Name"
+              fullWidth
               required
-              label="Message"
-              placeholder="Send me any inquiries or questions"
-              multiline
-              rows={10}
-              className="body-form"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              error={messageError}
-              helperText={messageError ? "Please enter the message" : ""}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              error={errors.name}
+              helperText={errors.name && 'Name is required'}
             />
-            <Button variant="contained" endIcon={<SendIcon />} onClick={sendEmail}>
-              Send
-            </Button>
-          </Box>
-        </div>
-      </div>
-    </div>
+            <TextField
+              name="email"
+              label="Email or Phone"
+              fullWidth
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={errors.email}
+              helperText={errors.email && 'Email or phone is required'}
+            />
+          </div>
+
+          <TextField
+            name="message"
+            label="Message"
+            multiline
+            rows={6}
+            fullWidth
+            required
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            error={errors.message}
+            helperText={errors.message && 'Message cannot be empty'}
+            sx={{ marginTop: 2 }}
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            endIcon={<SendIcon />}
+            sx={{ marginTop: 3, float: 'right' }}
+          >
+            Send
+          </Button>
+        </Box>
+      </Paper>
+    </section>
   );
 }
 
