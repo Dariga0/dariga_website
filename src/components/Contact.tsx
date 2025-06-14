@@ -36,15 +36,16 @@ I’m always open to discussing new opportunities, creative ideas, or potential 
 </p>
 
 
-        <Box
-          component="form"
-          className="contact-form"
-          action="https://formsubmit.co/darigarakhat025@gmail.com"
-          method="POST"
-          onSubmit={(e) => {
-            if (!validate()) e.preventDefault();
-          }}
-        >
+            <Box
+              component="form"
+              className="contact-form"
+              action="https://formsubmit.co/b4110c4905b9304e8373bda9c45fc842"  
+              method="POST"
+              onSubmit={(e) => {
+                if (!validate()) e.preventDefault();
+              }}
+            >
+
           <div className="form-row">
             <TextField
               name="name"
